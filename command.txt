@@ -1,0 +1,25 @@
+Hướng dẫn chạy project ESP32-LLM từ terminal:
+
+Lưu ý: Tên file log "Ngày/Giờ.txt" không hợp lệ trên Windows vì chứa ký tự '/'. Thay vào đó, hướng dẫn này sử dụng tên file có timestamp, ví dụ: "log_2025-10-27_10-30-00.txt".
+
+1. Mở Command Prompt hoặc PowerShell và di chuyển đến thư mục project:
+   cd D:\vhproj\esp32-llm
+
+2. Thiết lập môi trường ESP-IDF (chạy một lần cho mỗi phiên terminal):
+   C:\Users\firek\esp\v5.5.1\esp-idf\export.bat
+
+3. Build project (chỉ cần chạy nếu có thay đổi code):
+   idf.py build
+
+4. Flash firmware vào ESP32:
+   - Thay <PORT> bằng cổng COM của bạn (ví dụ: COM3).
+   - Nếu không biết cổng COM, bạn có thể tìm trong Device Manager của Windows.
+   idf.py -p <PORT> flash
+
+5. Theo dõi output và lưu log ra file (chạy trong PowerShell):
+   - Lệnh này sẽ vừa hiển thị output ra màn hình, vừa lưu log vào file có tên dạng "log_YYYY-MM-DD_HH-MM-SS.txt".
+   - Thay <PORT> bằng cổng COM của bạn.
+   idf.py -p <PORT> monitor | Tee-Object -FilePath "log_$(Get-Date -Format 'yyyy-MM-dd_HH-mm-ss').txt"
+
+Lưu ý quan trọng:
+- Để dừng việc ghi log, nhấn Ctrl+] trong cửa sổ terminal.
