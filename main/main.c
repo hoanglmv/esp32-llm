@@ -6,44 +6,44 @@
 #include "esp_log.h"
 #include <time.h>
 #include "llm.h"
-#include <u8g2.h>
-#include "u8g2_esp32_hal.h"
-#include <driver/i2c.h>
+// #include <u8g2.h>
+// #include "u8g2_esp32_hal.h"
+// #include <driver/i2c.h>
 #include <string.h>
 #include "llama.h"
 
 static const char *TAG = "MAIN";
-u8g2_t u8g2;
+// u8g2_t u8g2;
 
-#define PIN_SDA 8
-#define PIN_SCL 9
-#define OLED_I2C_ADDRESS 0x78
+// #define PIN_SDA 8
+// #define PIN_SCL 9
+// #define OLED_I2C_ADDRESS 0x78
 
 /**
  * @brief Configure SSD1306 display
  * Uses I2C connection
  */
-void init_display(void)
-{
-    u8g2_esp32_hal_t u8g2_esp32_hal = U8G2_ESP32_HAL_DEFAULT;
-    u8g2_esp32_hal.bus.i2c.sda = PIN_SDA;
-    u8g2_esp32_hal.bus.i2c.scl = PIN_SCL;
-    u8g2_esp32_hal_init(u8g2_esp32_hal);
-    u8g2_Setup_ssd1306_i2c_128x64_noname_f(
-        &u8g2, U8G2_R0,
-        // u8x8_byte_sw_i2c,
-        u8g2_esp32_i2c_byte_cb,
-        u8g2_esp32_gpio_and_delay_cb); // init u8g2 structure
-    // 0x3c
-    u8x8_SetI2CAddress(&u8g2.u8x8, OLED_I2C_ADDRESS);
-    u8g2_InitDisplay(&u8g2);     // send init sequence to the display, display is in
-                                 // sleep mode after this,
-    u8g2_SetPowerSave(&u8g2, 0); // wake up display
-    u8g2_ClearBuffer(&u8g2);
-    u8g2_SetFont(&u8g2, u8g2_font_ncenB08_tr);
-    u8g2_SendBuffer(&u8g2);
-    ESP_LOGI(TAG, "Display initialized");
-}
+// void init_display(void)
+// {
+//     u8g2_esp32_hal_t u8g2_esp32_hal = U8G2_ESP32_HAL_DEFAULT;
+//     u8g2_esp32_hal.bus.i2c.sda = PIN_SDA;
+//     u8g2_esp32_hal.bus.i2c.scl = PIN_SCL;
+//     u8g2_esp32_hal_init(u8g2_esp32_hal);
+//     u8g2_Setup_ssd1306_i2c_128x64_noname_f(
+//         &u8g2, U8G2_R0,
+//         // u8x8_byte_sw_i2c,
+//         u8g2_esp32_i2c_byte_cb,
+//         u8g2_esp32_gpio_and_delay_cb); // init u8g2 structure
+//     // 0x3c
+//     u8x8_SetI2CAddress(&u8g2.u8x8, OLED_I2C_ADDRESS);
+//     u8g2_InitDisplay(&u8g2);     // send init sequence to the display, display is in
+//                                  // sleep mode after this,
+//     u8g2_SetPowerSave(&u8g2, 0); // wake up display
+//     u8g2_ClearBuffer(&u8g2);
+//     u8g2_SetFont(&u8g2, u8g2_font_ncenB08_tr);
+//     u8g2_SendBuffer(&u8g2);
+//     ESP_LOGI(TAG, "Display initialized");
+// }
 
 /**
  * @brief intializes SPIFFS storage
@@ -96,12 +96,12 @@ void init_storage(void)
  * 
  * @param text The text to output
  */
-void write_display(char *text)
-{
-    u8g2_ClearBuffer(&u8g2);
-    u8g2_DrawStr(&u8g2, 0, u8g2_GetDisplayHeight(&u8g2) / 2, text);
-    u8g2_SendBuffer(&u8g2);
-}
+// void write_display(char *text)
+// {
+//     u8g2_ClearBuffer(&u8g2);
+//     u8g2_DrawStr(&u8g2, 0, u8g2_GetDisplayHeight(&u8g2) / 2, text);
+//     u8g2_SendBuffer(&u8g2);
+// }
 
 /**
  * @brief Callbacks once generation is done
@@ -112,23 +112,25 @@ void generate_complete_cb(float tk_s)
 {
     char buffer[50];
     sprintf(buffer, "%.2f tok/s", tk_s);
-    write_display(&buffer);
+    // write_display(buffer);
+    ESP_LOGI(TAG, "Generation complete: %s", buffer);
 }
 
 /**
  * @brief Draws a llama onscreen
  * 
  */
-void draw_llama(void)
-{
-    u8g2_DrawXBM(&u8g2, 0, 0, u8g2_GetDisplayWidth(&u8g2), u8g2_GetDisplayHeight(&u8g2), &llama_bmp);
-    u8g2_SendBuffer(&u8g2);
-}
+// void draw_llama(void)
+// {
+//     u8g2_DrawXBM(&u8g2, 0, 0, u8g2_GetDisplayWidth(&u8g2), u8g2_GetDisplayHeight(&u8g2), llama_bmp);
+//     u8g2_SendBuffer(&u8g2);
+// }
 
 void app_main(void)
 {
-    init_display();
-    write_display("Loading Model");
+    // init_display();
+    // write_display("Loading Model");
+    ESP_LOGI(TAG, "Loading Model");
     init_storage();
 
     // default parameters
@@ -137,7 +139,7 @@ void app_main(void)
     float temperature = 1.0f;        // 0.0 = greedy deterministic. 1.0 = original. don't set higher
     float topp = 0.9f;               // top-p in nucleus sampling. 1.0 = off. 0.9 works well, but slower
     int steps = 256;                 // number of steps to run for
-    char *prompt = NULL;             // prompt string
+    char *prompt = "In a world of dragons and magic, ";             // prompt string
     unsigned long long rng_seed = 0; // seed rng with time by default
 
     // parameter validation/overrides
@@ -160,6 +162,7 @@ void app_main(void)
     build_sampler(&sampler, transformer.config.vocab_size, temperature, topp, rng_seed);
 
     // run!
-    draw_llama();
+    // draw_llama();
+    ESP_LOGI(TAG, "Starting generation...");
     generate(&transformer, &tokenizer, &sampler, prompt, steps, &generate_complete_cb);
 }

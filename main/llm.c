@@ -18,6 +18,7 @@
 #include "esp_system.h"
 #include "esp_dsp.h"
 #include "esp_attr.h"
+#include "esp_heap_caps.h"
 
 #define MAP_FAILED NULL
 #define munmap(ptr, length) custom_munmap(ptr)
@@ -92,6 +93,10 @@ void chat(Transformer *transformer, Tokenizer *tokenizer, Sampler *sampler,
 
 void malloc_run_state(RunState *s, Config *p)
 {
+    ESP_LOGI(TAG, "Before malloc_run_state: Free heap: %lu, Free internal heap: %lu, Free PSRAM: %lu",
+             esp_get_free_heap_size(),
+             heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
+             heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
     // we calloc instead of malloc to keep valgrind happy
     int kv_dim = (p->dim * p->n_kv_heads) / p->n_heads;
     s->x = calloc(p->dim, sizeof(v4sf));
@@ -181,8 +186,15 @@ void read_checkpoint(char *checkpoint, Config *config, TransformerWeights *weigh
     *file_size = ftell(file); // get the file size, in bytes
     fseek(file, 0, SEEK_SET); // move back to beginning for reading
     ESP_LOGI(TAG, "File size: %zu bytes", *file_size);
-    ESP_LOGI(TAG, "Free ram available: %lu", esp_get_free_heap_size());
+    ESP_LOGI(TAG, "Before malloc: Free heap: %lu, Free internal heap: %lu, Free PSRAM: %lu",
+             esp_get_free_heap_size(),
+             heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
+             heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
     *data = malloc(*file_size);
+    ESP_LOGI(TAG, "After malloc: Free heap: %lu, Free internal heap: %lu, Free PSRAM: %lu",
+             esp_get_free_heap_size(),
+             heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
+             heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
     if (*data == NULL)
     {
         ESP_LOGE(TAG, "Malloc operation failed");

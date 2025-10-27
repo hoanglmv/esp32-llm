@@ -1,0 +1,113 @@
+Executing action: monitor
+Serial port COM8
+Connecting....
+Detecting chip type... ESP32-S3
+--- Warning: GDB cannot open serial ports accessed as COMx
+--- Using \\.\COM8 instead...
+--- esp-idf-monitor 1.8.0 on \\.\COM8 115200
+--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
+Running idf_monitor in directory D:\vhproj\esp32-llm
+Executing "C:\Users\firek\.espressif\python_env\idf5.5_py3.10_env\Scripts\python.exe C:\Users\firek\esp\v5.5.1\esp-idf\tools/idf_monitor.py -p COM8 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 D:\vhproj\esp32-llm\build\hello_world.elf D:\vhproj\esp32-llm\build\bootloader\bootloader.elf --force-color -m 'C:\Users\firek\.espressif\python_env\idf5.5_py3.10_env\Scripts\python.exe' 'C:\Users\firek\esp\v5.5.1\esp-idf\tools\idf.py'"...
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x1 (POWERON),boot:0x8 (SPI_FAST_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x1700
+load:0x403c8700,len:0xec0
+--- 0x403c8700: _stext at ??:?
+load:0x403cb700,len:0x31c0
+entry 0x403c894c
+--- 0x403c894c: call_start_cpu0 at C:/Users/firek/esp/v5.5.1/esp-idf/components/bootloader/subproject/main/bootloader_start.c:25
+I (25) boot: ESP-IDF v5.5.1 2nd stage bootloader
+I (25) boot: compile time Oct 27 2025 18:17:36
+I (25) boot: Multicore bootloader
+I (25) boot: chip revision: v0.2
+I (28) boot: efuse block revision: v1.3
+I (31) qio_mode: Enabling default flash chip QIO
+I (36) boot.esp32s3: Boot SPI Speed : 80MHz
+I (40) boot.esp32s3: SPI Mode       : QIO
+I (43) boot.esp32s3: SPI Flash Size : 16MB
+I (47) boot: Enabling RNG early entropy source...
+I (52) boot: Partition Table:
+I (54) boot: ## Label            Usage          Type ST Offset   Length
+I (61) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (67) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (74) boot:  2 factory          factory app      00 00 00010000 00100000
+I (80) boot:  3 data             Unknown data     01 82 00110000 00200000
+I (87) boot: End of partition table
+I (90) esp_image: segment 0: paddr=00010020 vaddr=3c030020 size=0c160h ( 49504) map
+I (105) esp_image: segment 1: paddr=0001c188 vaddr=3fc98e00 size=03920h ( 14624) load
+I (108) esp_image: segment 2: paddr=0001fab0 vaddr=40378000 size=00568h (  1384) load
+I (113) esp_image: segment 3: paddr=00020020 vaddr=42000020 size=27864h (161892) map
+I (144) esp_image: segment 4: paddr=0004788c vaddr=40378568 size=107a8h ( 67496) load
+I (157) esp_image: segment 5: paddr=0005803c vaddr=50000000 size=00020h (    32) load
+I (164) boot: Loaded app from partition at offset 0x10000
+I (164) boot: Disabling RNG early entropy source...
+I (175) octal_psram: vendor id    : 0x0d (AP)
+I (175) octal_psram: dev id       : 0x02 (generation 3)
+I (175) octal_psram: density      : 0x03 (64 Mbit)
+I (180) octal_psram: good-die     : 0x01 (Pass)
+I (185) octal_psram: Latency      : 0x01 (Fixed)
+I (190) octal_psram: VCC          : 0x01 (3V)
+I (195) octal_psram: SRF          : 0x01 (Fast Refresh)
+I (201) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+I (207) octal_psram: BurstLen     : 0x01 (32 Byte)
+I (213) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+I (219) octal_psram: DriveStrength: 0x00 (1/1)
+I (225) MSPI Timing: PSRAM timing tuning index: 5
+I (229) esp_psram: Found 8MB PSRAM device
+I (234) esp_psram: Speed: 80MHz
+I (238) cpu_start: Multicore app
+I (655) esp_psram: SPI SRAM memory test OK
+I (663) cpu_start: Pro cpu start user code
+I (664) cpu_start: cpu freq: 240000000 Hz
+I (664) app_init: Application information:
+I (666) app_init: Project name:     hello_world
+I (672) app_init: App version:      934dab4-dirty
+I (677) app_init: Compile time:     Oct 27 2025 19:23:09
+I (683) app_init: ELF file SHA256:  0f72b940d4545fc4...
+I (689) app_init: ESP-IDF:          v5.5.1
+I (694) efuse_init: Min chip rev:     v0.0
+I (698) efuse_init: Max chip rev:     v0.99 
+I (703) efuse_init: Chip rev:         v0.2
+I (708) heap_init: Initializing. RAM available for dynamic allocation:
+I (715) heap_init: At 3FC9D0A0 len 0004C670 (305 KiB): RAM
+I (722) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (728) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM
+I (734) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator
+I (742) spi_flash: detected chip: boya
+I (746) spi_flash: flash io: qio
+I (750) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (757) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (765) main_task: Started on CPU0
+I (785) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (785) main_task: Calling app_main()
+I (785) MAIN: Loading Model
+I (795) MAIN: Initializing SPIFFS
+I (875) MAIN: Partition size: total: 1920401, used: 1072021
+I (875) MAIN: LLM Path is /data/stories260K.bin
+I (875) LLM: Vocab size if 512
+I (905) LLM: File size: 1056540 bytes
+I (905) LLM: Before malloc: Free heap: 8676932, Free internal heap: 322839, Free PSRAM: 8386124
+I (915) LLM: After malloc: Free heap: 7595584, Free internal heap: 322839, Free PSRAM: 7304776
+I (1315) LLM: Successfully read LLM into memory
+I (1315) LLM: Free ram available: 7595804
+I (1315) LLM: Successfully read checkpoint
+I (1315) LLM: Before malloc_run_state: Free heap: 7595804, Free internal heap: 323059, Free PSRAM: 7304776
+I (1345) LLM: Transformer successfully built
+I (1345) LLM: Created FreeRTOS Tasks
+I (1345) LLM: Vocab size is 512
+
+I (1345) LLM: Opened Tokenizer File
+I (1365) LLM: Tokenizer successfully built
+I (1365) LLM: Sampler Successfully built
+I (1365) MAIN: Starting generation...
+Once upon a time, there was a little girl named Lily. She loved to play outside in the park. One day, she saw a big, red ball. She wanted to play with it, but it was too high.
+Lily's mom said, "Lily, let's go to the park." Lily was sad and didn't know what to do. She said, "I want to play with your ball, but I can't find it."
+Lily was sad and didn't know what to do. She said, "I'm sorry, Lily. I didn't know what to do."
+Lily didn't want to help her mom, so she said, "I'm sorry, mom. I didn't know what to do." Her mom said, "Don't worry, Lily. We can help you.
+achieved tok/s: 35.669323
+I (8535) MAIN: Generation complete: 35.67 tok/s
+I (8535) LLM: Generate complete
+I (8535) main_task: Returned from app_main()
