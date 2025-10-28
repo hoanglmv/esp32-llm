@@ -139,7 +139,7 @@ void app_main(void)
     float temperature = 1.0f;        // 0.0 = greedy deterministic. 1.0 = original. don't set higher
     float topp = 0.9f;               // top-p in nucleus sampling. 1.0 = off. 0.9 works well, but slower
     int steps = 256;                 // number of steps to run for
-    char *prompt = "In a world of dragons and magic, ";             // prompt string
+    char *prompt = "In the kingdom of Celestia, there is a girl with a mysterious past";             // prompt string
     unsigned long long rng_seed = 0; // seed rng with time by default
 
     // parameter validation/overrides

@@ -1,6 +1,4 @@
-Hướng dẫn chạy project ESP32-LLM từ terminal:
-
-Lưu ý: Tên file log "Ngày/Giờ.txt" không hợp lệ trên Windows vì chứa ký tự '/'. Thay vào đó, hướng dẫn này sử dụng tên file có timestamp, ví dụ: "log_2025-10-27_10-30-00.txt".
+Hướng dẫn chạy project ESP32-LLM  trên thiết bị ESP32S3 WROOM 1 N16R8 từ terminal:
 
 1. Mở Command Prompt hoặc PowerShell và di chuyển đến thư mục project:
    cd D:\vhproj\esp32-llm
@@ -17,9 +15,9 @@ Lưu ý: Tên file log "Ngày/Giờ.txt" không hợp lệ trên Windows vì ch�
    idf.py -p <PORT> flash
 
 5. Theo dõi output và lưu log ra file (chạy trong PowerShell):
-   - Lệnh này sẽ vừa hiển thị output ra màn hình, vừa lưu log vào file có tên dạng "log_YYYY-MM-DD_HH-MM-SS.txt".
+   - Lệnh này sẽ vừa hiển thị output ra màn hình, vừa lưu log vào file có tên dạng "log.txt".
    - Thay <PORT> bằng cổng COM của bạn.
-   idf.py -p <PORT> monitor | Tee-Object -FilePath "log_$(Get-Date -Format 'yyyy-MM-dd_HH-mm-ss').txt"
+   idf.py -p <PORT> monitor | Tee-Object -FilePath "log.txt"
 
 Lưu ý quan trọng:
 - Để dừng việc ghi log, nhấn Ctrl+] trong cửa sổ terminal.
